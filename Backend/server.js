@@ -1,7 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import nodemailer from 'nodemailer'
+import path from 'path'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 const connection_url= 'mongodb+srv://rahul09091988:Venugopal@1234@cluster0.ron03.mongodb.net/MissionVision?retryWrites=true&w=majority'
 mongoose.connect(connection_url,{
     useNewUrlParser: true,
@@ -11,10 +13,14 @@ mongoose.connect(connection_url,{
 
 //app config
 const app=express()
-const port=9000
-
+const port=process.env.PORT || 9000
+var __dirname = path.resolve()
 //middlewares
-app.use(express.json())
+//app.use(express.static(path.join(__dirname,'../build')))
+
+app.use(express.urlencoded({ extended: false }));
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 app.use(cors())
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin','*'),
@@ -24,7 +30,11 @@ app.use((req,res,next)=>{
 //DB config
 
 //api endpoints
-app.get('/',(req,res)=>res.status(200).send("hello world"))
+app.use(express.static(path.join(__dirname,'../build')))
+app.get('/:id',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../build','index.html'))
+})
+app.use(express.json());
 
 const FacultySchema=mongoose.Schema({
     imageSrc: String,

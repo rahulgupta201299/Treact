@@ -147,7 +147,8 @@ function TeamMembers({history,data,head,endpoint}){
           </Controls>
         </HeadingWithControl>
         <CardSlider ref={setSliderRef} {...sliderSettings}> 
-          {data?.map((card, index) => (
+          {
+          data.map((card, index) => (
             <Card key={index}>
               <CardImage onClick={()=> history.push(`/team/${endpoint}/${card._id}`)} style={{borderRadius:"50%",cursor:"pointer"}} imageSrc={card.imageSrc} />
               <CardContent>

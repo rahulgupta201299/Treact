@@ -7,11 +7,12 @@ import TeamCardGrid from "../../components/cards/ProfileThreeColGrid"
 import TeamMember from '../../components/cards/TeamMembers'
 import swal from 'sweetalert'
 function Teams() {
-    const [investigator,setInvestigator]=useState([{}])
-    const [researcher,setResearcher]=useState([{}])
-    const [graduate,setGraduate]=useState([{}])
-    const [administration,setAdministration]=useState([{}])
-    const [alumni,setAlumni]=useState([{}])
+    const [investigator,setInvestigator]=useState([])
+    const [researcher,setResearcher]=useState([])
+    const [graduate,setGraduate]=useState([])
+    const [administration,setAdministration]=useState([])
+    const [alumni,setAlumni]=useState([])
+    
 
     useEffect(()=>{
         Axios.get('http://localhost:9000/team/investigator').then(res=>{
