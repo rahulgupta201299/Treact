@@ -148,7 +148,7 @@ export default function App() {
       <Hero />
       <Switch>
       <Route exact path="/" component={HomeComponent} />
-      <Route exact path="/team/:category/:id" component={Member} />
+      <Route exact path="/team/TeamMember/:id" component={Member} />
       <Route exact path="/about" component={AboutUs} />
       <Route exact path="/meetOurTeam" component={Teams} />
       <Route exact path="/research_projects" component={ResearchProjects} />

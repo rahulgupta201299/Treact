@@ -13,6 +13,11 @@ import { ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
 import { ReactComponent as LinkedinIcon} from "images/linkedin-icon.svg";
 import { ReactComponent as GithubIcon } from "images/github-icon.svg";
 import { withRouter } from "react-router";
+import {SiResearchgate,SiGooglescholar} from 'react-icons/si'
+import {AiOutlineYoutube} from 'react-icons/ai'
+import Axios from "axios";
+import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
+import { Link } from "react-router-dom";
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-16 lg:py-20`;
@@ -87,31 +92,15 @@ const Text = tw.div`ml-2 text-sm font-semibold text-gray-800`;
 
 const PrimaryButton = tw(PrimaryButtonBase)`mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
 */
-function TeamMembers({history,data,head,endpoint}){
+function TeamMembers({history,head}){
 
   // useState is used instead of useRef below because we want to re-render when sliderRef becomes available (not null)
   const [width,setWidth]=useState(0)
   const [sliderRef, setSliderRef] = useState(null);
-  const sliderSettings = {
-    arrows: false,
-    slidesToShow: 3,
-    responsive: [
-      {
-        breakpoint: 1000,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-
-      {
-        breakpoint: 750,
-        settings: {
-          slidesToShow: 1,
-        }
-      },
-    ]
-  };
-
+  const [TeamMember,setTeamMember]=useState([])
+  const [count,setCount]=useState(0)
+  const [click,setClick]=useState(false)
+  const [read,setRead]=useState(30)
   useEffect(()=>{
       setWidth(window.innerWidth)
       const updateWindowDimensions = () => {
@@ -123,7 +112,41 @@ function TeamMembers({history,data,head,endpoint}){
       return () => window.removeEventListener("resize", updateWindowDimensions) 
   },[])
 
+useEffect(()=>{
+  Axios.get('http://localhost:9000/category/AllTeamMembers').then(res=>{
+    var arr=res.data
+    arr.sort((a,b)=>{
+      return a.order-b.order
+    })
+    for(var i=0;i<arr.length;i++){
+      if(arr[i].category===head){
+        setCount(count+1)
+      }
+    }
+    setTeamMember(arr)
+    console.log(arr)
+  })
+},[])
 
+const sliderSettings = {
+  arrows: false,
+  slidesToShow: count!==0&&count<3? count:2,
+  responsive: [
+    {
+      breakpoint: 1000,
+      settings: {
+        slidesToShow: count!==0&&count<2? count:1,
+      }
+    },
+
+    {
+      breakpoint: 750,
+      settings: {
+        slidesToShow: 1,
+      }
+    },
+  ]
+};
 
   /* Change this according to your needs */
   const CardImage =
@@ -134,8 +157,14 @@ function TeamMembers({history,data,head,endpoint}){
     tw`hover:opacity-50`
     ])
 
-
-
+    const handleRead=()=>{
+      setClick(true)
+      setRead(1000)
+    }
+    const handleUnread=()=>{
+      setClick(false)
+      setRead(30)
+    }
   return (
     <Container>
       <Content>
@@ -148,26 +177,44 @@ function TeamMembers({history,data,head,endpoint}){
         </HeadingWithControl>
         <CardSlider ref={setSliderRef} {...sliderSettings}> 
           {
-          data.map((card, index) => (
-            <Card key={index}>
-              <CardImage onClick={()=> history.push(`/team/${endpoint}/${card._id}`)} style={{borderRadius:"50%",cursor:"pointer"}} imageSrc={card.imageSrc} />
+          TeamMember.map((card, index) => (
+            (card.category===head)?(
+              <Card key={index}>
+              <CardImage onClick={()=> history.push(`/team/TeamMember/${card._id}`)} style={{borderRadius:"50%",cursor:"pointer"}} imageSrc={card.image} />
               <CardContent>
-                <span className="position">{card.position}</span>
                 <span className="name">{card.name}</span>
+                {
+                  card.position?(card.position.length>30?<span style={{width:"200px",position:"relative"}} className="position">{card.position.substring(0,read)}<br/>{click?<button onClick={handleUnread} style={{color:"purple"}}> Read less...</button>:<button onClick={handleRead} style={{color:"purple"}}> Read more...</button>}</span>
+                  :<span className="position">{card.position} </span>) : null
+                }
+                
                 <CardLinks>
                 {
-                    card.LinkedInUrl?(<a className="link" href={card.LinkedInUrl}>
+                    card.GoogleScholar?(<a className="link" href={card.GoogleScholar}>
+                    <SiGooglescholar className="icon" /></a>):null
+                }
+                {
+                    card.ResearchGate?(<a className="link" href={card.ResearchGate}>
+                    <SiResearchgate className="icon"/></a>):null
+                }
+                {
+                    card.LinkedIn?(<a className="link" href={card.LinkedIn}>
                     <LinkedinIcon className="icon" /></a>):null
                 }
                 {
-                    card.GithubUrl?(
-                        <a className="link" href={card.GithubUrl}>
+                    card.Github?(
+                        <a className="link" href={card.Github}>
                     <GithubIcon className="icon" /></a>
                     ):null
+                }
+                {
+                    card.Youtube?(<a className="link" href={card.Youtube}>
+                    <AiOutlineYoutube className="icon" /></a>):null
                 }
                 </CardLinks>
               </CardContent>
             </Card>
+            ):null
           ))}
         </CardSlider>
       </Content>

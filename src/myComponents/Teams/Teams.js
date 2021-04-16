@@ -7,36 +7,17 @@ import TeamCardGrid from "../../components/cards/ProfileThreeColGrid"
 import TeamMember from '../../components/cards/TeamMembers'
 import swal from 'sweetalert'
 function Teams() {
-    const [investigator,setInvestigator]=useState([])
-    const [researcher,setResearcher]=useState([])
-    const [graduate,setGraduate]=useState([])
-    const [administration,setAdministration]=useState([])
-    const [alumni,setAlumni]=useState([])
+    const [category,setCategory]=useState([{}])
     
-
     useEffect(()=>{
-        Axios.get('http://localhost:9000/team/investigator').then(res=>{
-            setInvestigator(res.data)
-        }).catch(()=>{
-            swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
-        })
-        Axios.get('http://localhost:9000/team/graduate').then(res=>{
-            setGraduate(res.data)
-        }).catch(()=>{
-            swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
-        })
-        Axios.get('http://localhost:9000/team/administration').then(res=>{
-            setAdministration(res.data)
-        }).catch(()=>{
-            swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
-        })
-        Axios.get('http://localhost:9000/team/researchers').then(res=>{
-            setResearcher(res.data)
-        }).catch(()=>{
-            swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
-        })
-        Axios.get('http://localhost:9000/team/alumni').then(res=>{
-            setAlumni(res.data)
+        
+        Axios.get('http://localhost:9000/category/team').then(res=>{
+            var arr=res.data
+            arr.sort((a,b)=>{
+                return a.order-b.order
+            })
+            setCategory(arr)
+            console.log(arr)
         }).catch(()=>{
             swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
         })
@@ -44,11 +25,11 @@ function Teams() {
     
     return (
         <AnimationRevealPage>
-            <TeamMember endpoint="investigator" head="Prinicipal Investigators" data={investigator}/>
-            <TeamMember endpoint="researchers" head="Researchers" data={researcher}/>
-            <TeamMember endpoint="graduate" head="Graduate Students" data={graduate}/>
-            <TeamMember endpoint="administration" head="Administration" data={administration}/>
-            <TeamMember endpoint="alumni" head="Alumni" data={alumni}/>
+            {
+                category.map((card,i)=>(
+                    <TeamMember head={card.heading} />
+                ))
+            }
         </AnimationRevealPage>
     )
 }

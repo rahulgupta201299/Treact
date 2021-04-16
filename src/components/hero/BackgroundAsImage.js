@@ -17,10 +17,7 @@ const StyledHeader = styled(Header)`
     ${tw`text-gray-100 hover:text-primary-500`}
   }
 `;
-const Container = styled.div`
-  ${tw`relative -mx-8 -mt-8 bg-center bg-cover`}
-  background-image: url("https://images.unsplash.com/photo-1522071901873-411886a10004?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80");
-`;
+
 
 const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-primary-500 opacity-25`;
 
@@ -62,6 +59,7 @@ function BackgroundAsImage(){
   const [phone,setPhone]=useState(true)
   const [left,setLeft]=useState('')
   const [open,setOpen]=useState(false)
+  const [imageSize,setImageSize]=useState("40%")
   useEffect(() => {
     if(window.innerWidth<1024){
       setPhone(false)
@@ -76,10 +74,12 @@ function BackgroundAsImage(){
       if(Width<1024){
         setPhone(false)
         setLeft('')
+        setImageSize("70%")
       }
       else{
         setPhone(true)
         setLeft('100px')
+        setImageSize("40%")
       }
     };
   
@@ -127,6 +127,12 @@ function BackgroundAsImage(){
       </PrimaryLink>
     </NavLinks>
   ];
+  const Container = styled.div`
+  ${tw`relative -mx-8 -mt-8 bg-center bg-cover`}
+  background-image: url("https://i.ibb.co/nczkWJx/hero-academic.png");
+  background-size: ${imageSize};
+  background-repeat: no-repeat;
+`;
 const handleClick=()=>{
   swal({icon:'success',text:'Hey Rahul!'})
 }
@@ -137,11 +143,11 @@ const handleClick=()=>{
         <StyledHeader links={navLinks} />
         <TwoColumn>
           <LeftColumn>
-            <Notification>We have now launched operations in Europe.</Notification>
+            <Notification style={{fontSize:"30px"}}>Department of Neurophysiology</Notification>
             <Heading>
-              <span>Hire the best</span>
+              <span style={{fontSize:"60px"}}>Centre for Consciousness Studies</span>
               <br />
-              <SlantedBackground>Marketing Team.</SlantedBackground>
+              <SlantedBackground>NIMHANS</SlantedBackground>
             </Heading>
             <PrimaryAction onClick={handleClick}>Read Customer Stories</PrimaryAction>
           </LeftColumn>

@@ -36,33 +36,36 @@ app.get('/:id',(req,res)=>{
 })
 app.use(express.json());
 
-const FacultySchema=mongoose.Schema({
-    imageSrc: String,
-    position: String,
+
+const TeamCategory=mongoose.Schema({
+    heading: String,
+    order: Number,
+})
+const teamcategory=mongoose.model('teamcategory',TeamCategory)
+
+app.get('/category/team',(req,res)=>{
+    teamcategory.find((err,data)=>{
+        if(err){
+            res.status(500).send(err)
+        }
+        else{
+            res.status(200).send(data)
+        }
+    })
+})
+const AllTeamMembers=mongoose.Schema({
+    category: String,
+    order: Number,
+    image: String,
+    positon: String,
     name: String,
-    LinkedInUrl: String,
-    GithubUrl: String,
-    GoogleScholarUrl: String,
-    ResearchGateUrl: String,
+    LinkedIn: String,
+    ResearchScholar: String,
+    Github: String,
 })
-const Investigators=mongoose.model('Principal Investigators',FacultySchema)
-const Researchers=mongoose.model('Researchers',FacultySchema)
-const Graduate=mongoose.model('Graduate Students',FacultySchema)
-const Administration=mongoose.model('Administration',FacultySchema)
-const Alumni=mongoose.model('Alumni',FacultySchema)
-
-/*app.post('/team/post',(req,res)=>{
-    faculty.create(req.body,(err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})*/
-app.get('/team/investigator',(req,res)=>{
-    Investigators.find((err,data)=>{
+const allteammembers=mongoose.model('allteammembers',AllTeamMembers)
+app.get('/team/TeamMember/:id',(req,res)=>{
+    allteammembers.find({_id:req.params.id},(err,data)=>{
         if(err){
             res.status(500).send(err)
         }
@@ -71,8 +74,8 @@ app.get('/team/investigator',(req,res)=>{
         }
     })
 })
-app.get('/team/investigator/:id',(req,res)=>{
-    Investigators.find({_id:req.params.id},(err,data)=>{
+app.get('/category/AllTeamMembers',(req,res)=>{
+    allteammembers.find((err,data)=>{
         if(err){
             res.status(500).send(err)
         }
@@ -81,8 +84,20 @@ app.get('/team/investigator/:id',(req,res)=>{
         }
     })
 })
-app.get('/team/graduate',(req,res)=>{
-    Graduate.find((err,data)=>{
+const ProjectCategory=mongoose.Schema({
+    category: String,
+    order: Number,
+})
+const AllProject=mongoose.Schema({
+    category: String,
+    image: String,
+    order: Number,
+    name: String,
+})
+const projectcategory=mongoose.model('projectcategory',ProjectCategory)
+const allproject=mongoose.model('allproject',AllProject)
+app.get('/category/project',(req,res)=>{
+    projectcategory.find((err,data)=>{
         if(err){
             res.status(500).send(err)
         }
@@ -91,8 +106,8 @@ app.get('/team/graduate',(req,res)=>{
         }
     })
 })
-app.get('/team/graduate/:id',(req,res)=>{
-    Graduate.find({_id:req.params.id},(err,data)=>{
+app.get('/category/AllProject',(req,res)=>{
+    allproject.find((err,data)=>{
         if(err){
             res.status(500).send(err)
         }
@@ -101,69 +116,6 @@ app.get('/team/graduate/:id',(req,res)=>{
         }
     })
 })
-app.get('/team/administration',(req,res)=>{
-    Administration.find((err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-app.get('/team/administration/:id',(req,res)=>{
-    Administration.find({_id:req.params.id},(err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-app.get('/team/researchers',(req,res)=>{
-    Researchers.find((err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-app.get('/team/researchers/:id',(req,res)=>{
-    Researchers.find({_id:req.params.id},(err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-app.get('/team/alumni',(req,res)=>{
-
-    Alumni.find((err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-app.get('/team/alumni/:id',(req,res)=>{
-
-    Alumni.find({_id:req.params.id},(err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-
 app.post('/contact',(req,res)=>{
     const data=req.body
     var transporter = nodemailer.createTransport({
@@ -194,47 +146,5 @@ app.post('/contact',(req,res)=>{
         }
       });
 })
-//listen
 app.listen(port,()=>console.log(`Listening on Localhost: ${port}`))
 
-/*
-
-app.post('/v2/posts',(req,res)=>{
-    const dbblog=req.body
-    Blog.create(dbblog,(err,data)=>{
-        if(err){
-            res.send(500).send(err)
-        }
-        else{
-            res.status(201).send(data)
-        }
-    })
-})
-app.get('/v2/posts',(req,res)=>{
-    Blog.find((err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    }).sort({_id:-1})
-})
-const FacultySchema=mongoose.Schema({
-    imageSrc: String,
-    position: String,
-    name: String
-})
-const faculty=mongoose.model('FacultiesDB',FacultySchema)
-app.get('/faculties',(req,res)=>{
-    faculty.find((err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
-
-*/

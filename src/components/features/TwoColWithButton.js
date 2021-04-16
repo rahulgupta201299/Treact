@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -7,7 +7,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import TeamIllustrationSrc from "images/team-illustration-2.svg";
 import {ReactComponent as SvgDotPattern } from "images/dot-pattern.svg"
 import { withRouter } from "react-router";
-
+import Axios from 'axios'
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -41,7 +41,8 @@ const PrimaryButton = styled(PrimaryButtonBase)(props => [
 ]);
 
 
-function TwoColWithButton ({
+function TwoColWithButton ({ 
+
   subheading = "Our Expertise",
   heading = (
     <>
@@ -63,12 +64,28 @@ function TwoColWithButton ({
   history
 }){
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
-
+  const [member,setMember]=useState([])
+  useEffect(()=>{
+    Axios.get('http://localhost:9000/category/AllTeamMembers').then(res=>{
+      var arr=res.data
+      arr.sort((a,b)=>{
+        return a.order-b.order
+      })
+      console.log(arr)
+      setMember(arr)
+    })
+    },[])
   return (
     <Container>
       <TwoColumn>
         <ImageColumn>
-          <Image css={imageCss} src={imageSrc} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded}/>
+          {
+            member?(
+              member.map((card,i)=>(
+                i<9 && <Image key={i} style={{borderRadius:"50%",width:"30%",height:"30%",display:"inline-block",margin:"1%"}} css={imageCss} src={card.image} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded}/>
+              ))
+            ):<Image css={imageCss} src={imageSrc} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded}/>
+          }
           {imageDecoratorBlob && <DecoratorBlob css={imageDecoratorBlobCss} />}
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>

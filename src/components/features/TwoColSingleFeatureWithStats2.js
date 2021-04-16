@@ -40,14 +40,14 @@ const DecoratorBlob = styled(SvgDotPattern)(props => [
 ]);
 
 export default ({
-  subheading = "Our Track Record",
+  subheading = "Founder",
   heading = (
     <>
       We have been doing this <wbr /> since <span tw="text-primary-500">1999.</span>
     </>
   ),
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  primaryButtonText = "Learn More",
+  description = "I am a Professor of Neurophysiology and Officer In-charge of Centre for Consciousness Studies. I am also the Associate Dean, Basic Sciences and head of student affairs, NIMHANS. My major objective is to contribute towards the perspectives of the cognitive reserve capacities of the brain and towards the understanding of the Neurobiology of Consciousness along the illness to wellness spectrum in sleeping and waking brain",
+  primaryButtonText = "View Profile",
   primaryButtonUrl = "https://timerse.com",
   imageSrc = StatsIllustrationSrc,
   imageCss = null,
@@ -81,7 +81,7 @@ export default ({
     <Container>
       <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>
         <ImageColumn css={imageContainerCss}>
-          {imageInsideDiv ? <Image imageSrc={imageSrc} css={imageCss} /> : <img src={imageSrc} css={imageCss} alt="" />}
+          {imageInsideDiv ? <Image imageSrc="https://i.ibb.co/f0jZW7w/avatar.jpg" style={{height:"80%",width:"80%",marginTop:"80px",marginLeft:"35px"}}/> : <img src="https://i.ibb.co/f0jZW7w/avatar.jpg" css={imageCss} alt="" />}
           {imageDecoratorBlob && <DecoratorBlob css={imageDecoratorBlobCss} />}
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
