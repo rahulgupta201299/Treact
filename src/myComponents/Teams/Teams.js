@@ -11,7 +11,7 @@ function Teams() {
     
     useEffect(()=>{
         
-        Axios.get('http://localhost:9000/category/team').then(res=>{
+        Axios.get('/category/team').then(res=>{
             var arr=res.data
             arr.sort((a,b)=>{
                 return a.order-b.order

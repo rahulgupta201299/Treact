@@ -65,7 +65,7 @@ function TabGrid({heading = "Checkout the Projects",history}){
   const [project,setProject]=useState([{}])
   //const [tabs,setTab]=useState({})
   useEffect(()=>{
-    Axios.get('http://localhost:9000/category/project').then(res=>{
+    Axios.get('/category/project').then(res=>{
       var arr=res.data
       arr.sort((a,b)=>{
         return a.order-b.order
@@ -73,7 +73,7 @@ function TabGrid({heading = "Checkout the Projects",history}){
       setCategory(arr)
       console.log(arr)
     })
-    Axios.get('http://localhost:9000/category/AllProject').then(res=>{
+    Axios.get('/category/AllProject').then(res=>{
     var array=res.data
     array.sort((a,b)=>{
       return a.order-b.order
