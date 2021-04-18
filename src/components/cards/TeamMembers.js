@@ -113,7 +113,7 @@ function TeamMembers({history,head}){
   },[])
 
 useEffect(()=>{
-  Axios.get('/category/AllTeamMembers').then(res=>{
+  Axios.get('https://missionvission.herokuapp.com/category/AllTeamMembers').then(res=>{
     var arr=res.data
     arr.sort((a,b)=>{
       return a.order-b.order

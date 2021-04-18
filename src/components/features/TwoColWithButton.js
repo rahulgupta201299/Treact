@@ -66,7 +66,7 @@ function TwoColWithButton ({
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const [member,setMember]=useState([])
   useEffect(()=>{
-    Axios.get('/category/AllTeamMembers').then(res=>{
+    Axios.get('https://missionvission.herokuapp.com/category/AllTeamMembers').then(res=>{
       var arr=res.data
       arr.sort((a,b)=>{
         return a.order-b.order

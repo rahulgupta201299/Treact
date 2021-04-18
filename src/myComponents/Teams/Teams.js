@@ -11,7 +11,7 @@ function Teams() {
     
     useEffect(()=>{
         
-        Axios.get('/category/team').then(res=>{
+        Axios.get('https://missionvission.herokuapp.com/category/team').then(res=>{
             var arr=res.data
             arr.sort((a,b)=>{
                 return a.order-b.order

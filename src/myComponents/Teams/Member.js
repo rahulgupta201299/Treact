@@ -6,7 +6,7 @@ import swal from 'sweetalert'
 function Member() {
     const {category,id}=useParams()
     useEffect(()=>{
-        axios.get(`/team/TeamMember/${id}`).then(res=>{
+        axios.get(`https://missionvission.herokuapp.com/team/TeamMember/${id}`).then(res=>{
             console.log(res.data)
         }).catch(()=>{
             swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
