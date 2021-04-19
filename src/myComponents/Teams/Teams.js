@@ -21,7 +21,8 @@ function Teams() {
             }
             setCategory(arr)
             console.log(arr)
-        }).catch(()=>{
+        }).catch((err)=>{
+            console.log(err)
             swal({title:"Network Error",text:"Please Connect to an active Internet Connection",icon:"warning"}).then(()=>window.location.reload())
         })
     },[])

@@ -81,14 +81,14 @@ function TwoColWithButton ({
     //console.log(url)
     Axios.get(`${url}/category/team`).then(res=>{
       var arr=res.data
+      console.log(arr)
       if(arr.length){
         arr.sort((a,b)=>{
           return a.order-b.order
         })
       }
-      console.log(arr)
       setMember(arr)
-    })
+    }).catch(err=> console.log(err))
     },[])
     const CardImage =
     styled.div(props => [
