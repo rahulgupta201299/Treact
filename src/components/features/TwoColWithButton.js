@@ -78,7 +78,7 @@ function TwoColWithButton ({
     return () => window.removeEventListener("resize", updateWindowDimensions) 
 },[])
   useEffect(()=>{
-    console.log(url)
+    //console.log(url)
     Axios.get(`${url}/category/team`).then(res=>{
       var arr=res.data
       if(arr.length){
