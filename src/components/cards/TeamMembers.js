@@ -116,9 +116,11 @@ function TeamMembers({history,head}){
 useEffect(()=>{
   Axios.get(`${url}/category/AllTeamMembers`).then(res=>{
     var arr=res.data
-    arr.sort((a,b)=>{
-      return a.order-b.order
-    })
+    if(arr.length){
+      arr.sort((a,b)=>{
+        return a.order-b.order
+      })
+    }
     for(var i=0;i<arr.length;i++){
       if(arr[i].category===head){
         setCount(count+1)

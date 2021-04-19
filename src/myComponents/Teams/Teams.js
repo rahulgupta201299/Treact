@@ -14,9 +14,11 @@ function Teams() {
         
         Axios.get(`${url}/category/team`).then(res=>{
             var arr=res.data
-            arr.sort((a,b)=>{
-                return a.order-b.order
-            })
+            if(arr.length){
+                arr.sort((a,b)=>{
+                    return a.order-b.order
+                })
+            }
             setCategory(arr)
             console.log(arr)
         }).catch(()=>{

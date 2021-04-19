@@ -67,17 +67,21 @@ function TabGrid({heading = "Checkout the Projects",history}){
   useEffect(()=>{
     Axios.get(`${url}/category/project`).then(res=>{
       var arr=res.data
-      arr.sort((a,b)=>{
-        return a.order-b.order
-      })
+      if(arr.length){
+        arr.sort((a,b)=>{
+          return a.order-b.order
+        })
+      }
       setCategory(arr)
       console.log(arr)
     })
     Axios.get(`${url}/category/AllProject`).then(res=>{
     var array=res.data
-    array.sort((a,b)=>{
-      return a.order-b.order
-    })
+    if(array.length){
+      array.sort((a,b)=>{
+        return a.order-b.order
+      })
+    }
     setProject(array)
     console.log(array)
   })
