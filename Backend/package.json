@@ -12,7 +12,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js | react-scripts start"
   },
-  "proxy": "https://missionvission.herokuapp.com/",
   "author": "Rahul Gupta",
   "license": "ISC",
   "dependencies": {
