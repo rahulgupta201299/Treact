@@ -70,7 +70,7 @@ app.get('/category/team',(req,res)=>{
             res.status(500).send(err)
         }
         else{
-            res.status(200).json(data)
+            res.status(200).send(data)
         }
     })
 })
@@ -80,7 +80,7 @@ app.get('/category/team/:id',(req,res)=>{
             res.status(500).send(err)
         }
         else{
-            res.status(200).json(data)
+            res.status(200).send(data)
         }
     })
 })
@@ -90,7 +90,7 @@ app.get('/team/TeamMember/:id',(req,res)=>{
             res.status(500).send(err)
         }
         else{
-            res.status(200).json(data)
+            res.status(200).send(data)
         }
     })
 })
@@ -100,7 +100,7 @@ app.get('/category/AllTeamMembers',(req,res)=>{
             res.status(500).send(err)
         }
         else{
-            res.status(200).json(data)
+            res.status(200).send(data)
         }
     })
 })
@@ -122,7 +122,7 @@ app.get('/category/project',(req,res)=>{
             res.status(500).send(err)
         }
         else{
-            res.status(200).json(data)
+            res.status(200).send(data)
         }
     })
 })
@@ -132,7 +132,7 @@ app.get('/category/AllProject',(req,res)=>{
             res.status(500).send(err)
         }
         else{
-            res.status(200).json(data)
+            res.status(200).send(data)
         }
     })
 })

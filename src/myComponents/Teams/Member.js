@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import {useParams} from 'react-router'
-import axios from 'axios'
+import Axios from 'axios'
 import './Member.scss'
 import swal from 'sweetalert'
 import url from '../../base'
@@ -9,7 +9,7 @@ function Member() {
     const {id}=useParams()
     const [data,setData]=useState([])
     useEffect(()=>{
-        axios.get(`${url}/team/TeamMember/${id}`).then(res=>{
+        Axios.get(`${url}/team/TeamMember/${id}`).then(res=>{
             setData(res.data)
             console.log(res.data)
         }).catch(()=>{
