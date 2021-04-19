@@ -33,8 +33,8 @@ app.use((req,res,next)=>{
 //api endpoints
 
 app.use(express.json());
-app.use(BodyParser.json());
-app.use(BodyParser.urlencoded({ extended: true }));
+//app.use(BodyParser.json());
+//app.use(BodyParser.urlencoded({ extended: true }));
 
 
 const TeamCategory=mongoose.Schema({
