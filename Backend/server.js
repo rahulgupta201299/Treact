@@ -18,16 +18,16 @@ var __dirname = path.resolve()
 //middlewares
 //app.use(express.static(path.join(__dirname,'../build')))
 
-app.use(express.urlencoded({ extended: false }));
+//app.use(express.urlencoded({ extended: false }));
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(cors())
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin','*'),
     next()
 })
 //DB config
-
+app.use(express.json());
 //api endpoints
 app.use(express.static(path.join(__dirname,'../build')))
 app.get('/:id',(req,res)=>{
