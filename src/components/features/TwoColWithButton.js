@@ -79,7 +79,7 @@ function TwoColWithButton ({
 },[])
   useEffect(()=>{
     //console.log(url)
-    Axios.get(`https://missionvision.netlify.app/category/team`).then(res=>{
+    Axios.get(`/category/team`).then(res=>{
       var arr=res.data
       console.log(arr)
       if(arr.length){
