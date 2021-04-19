@@ -31,7 +31,10 @@ app.use((req,res,next)=>{
 //DB config
 
 //api endpoints
-
+app.use(express.static(path.join(__dirname,'../build')))
+app.get('/:id',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../build','index.html'))
+})
 app.use(express.json());
 //app.use(BodyParser.json());
 //app.use(BodyParser.urlencoded({ extended: true }));
