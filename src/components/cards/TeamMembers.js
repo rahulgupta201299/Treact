@@ -18,6 +18,7 @@ import {AiOutlineYoutube} from 'react-icons/ai'
 import Axios from "axios";
 import MiniCenteredFooter from "components/footers/MiniCenteredFooter";
 import { Link } from "react-router-dom";
+import url from '../../base'
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-16 lg:py-20`;
@@ -113,7 +114,7 @@ function TeamMembers({history,head}){
   },[])
 
 useEffect(()=>{
-  Axios.get('https://missionvission.herokuapp.com/category/AllTeamMembers').then(res=>{
+  Axios.get(`${url}/category/AllTeamMembers`).then(res=>{
     var arr=res.data
     arr.sort((a,b)=>{
       return a.order-b.order

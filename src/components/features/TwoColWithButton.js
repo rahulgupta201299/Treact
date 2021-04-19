@@ -8,6 +8,7 @@ import TeamIllustrationSrc from "images/team-illustration-2.svg";
 import {ReactComponent as SvgDotPattern } from "images/dot-pattern.svg"
 import { withRouter } from "react-router";
 import Axios from 'axios'
+import url from '../../base'
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -65,8 +66,19 @@ function TwoColWithButton ({
 }){
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const [member,setMember]=useState([])
+  const [width,setWidth]=useState(0)
   useEffect(()=>{
-    Axios.get('https://missionvission.herokuapp.com/category/AllTeamMembers').then(res=>{
+    setWidth(window.innerWidth)
+    const updateWindowDimensions = () => {
+      setWidth(window.innerWidth)
+    };
+  
+    window.addEventListener("resize", updateWindowDimensions);
+  
+    return () => window.removeEventListener("resize", updateWindowDimensions) 
+},[])
+  useEffect(()=>{
+    Axios.get(`${url}/category/team`).then(res=>{
       var arr=res.data
       arr.sort((a,b)=>{
         return a.order-b.order
@@ -75,6 +87,13 @@ function TwoColWithButton ({
       setMember(arr)
     })
     },[])
+    const CardImage =
+    styled.div(props => [
+    `background-image: url("${props.imageSrc}");`,
+    width<400&&width>250 && tw`h-40 w-40`,width<280 && tw`h-20 w-20`,width<348 &&width>280 && tw`h-24 w-24`,width<440 && width>348 && tw`w-32 h-32`,width<770&&width>440 && tw`h-48 w-48`,width<880 && width>770 && tw`h-40 w-40`,width<1015 && width>880 && tw`h-48 w-48`,width>1015&&width<1150&& tw`h-56 w-56`,
+    width>1150&& tw`h-64 w-64`,tw`bg-cover bg-center rounded sm:rounded-none`,
+    tw`hover:opacity-50`
+    ])
   return (
     <Container>
       <TwoColumn>
@@ -82,7 +101,7 @@ function TwoColWithButton ({
           {
             member?(
               member.map((card,i)=>(
-                i<9 && <Image key={i} style={{borderRadius:"50%",width:"30%",height:"30%",display:"inline-block",margin:"1%"}} css={imageCss} src={card.image} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded}/>
+                <CardImage onClick={()=> history.push(`/meetOurTeam`)} style={{borderRadius:"50%",display:"inline-block",margin:"1%",cursor:"pointer"}} imageSrc={card.image} />
               ))
             ):<Image css={imageCss} src={imageSrc} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded}/>
           }
@@ -104,3 +123,4 @@ function TwoColWithButton ({
 };
 
 export default withRouter(TwoColWithButton)
+

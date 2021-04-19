@@ -6,12 +6,13 @@ import AnimationRevealPage from '../../helpers/AnimationRevealPage'
 import TeamCardGrid from "../../components/cards/ProfileThreeColGrid"
 import TeamMember from '../../components/cards/TeamMembers'
 import swal from 'sweetalert'
+import url from '../../base'
 function Teams() {
     const [category,setCategory]=useState([{}])
     
     useEffect(()=>{
         
-        Axios.get('https://missionvission.herokuapp.com/category/team').then(res=>{
+        Axios.get(`${url}/category/team`).then(res=>{
             var arr=res.data
             arr.sort((a,b)=>{
                 return a.order-b.order
@@ -27,7 +28,7 @@ function Teams() {
         <AnimationRevealPage>
             {
                 category.map((card,i)=>(
-                    <TeamMember head={card.heading} />
+                    <TeamMember head={card.category} />
                 ))
             }
         </AnimationRevealPage>

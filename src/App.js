@@ -1,6 +1,6 @@
 import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
-import React from "react";
+import React,{useEffect} from "react";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
 /*
@@ -117,6 +117,7 @@ import Mission from "myComponents/MissionVision/Mission";
 import customerSupportIllustrationSrc from "images/customer-support-illustration.svg";
 import AboutUs from './myComponents/AboutUs/AboutUs'
 import Member from './myComponents/Teams/Member.js'
+import url from './base'
 const HomeComponent=()=>{
   return(
     <AnimationRevealPage>

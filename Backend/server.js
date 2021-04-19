@@ -42,17 +42,6 @@ const TeamCategory=mongoose.Schema({
     order: Number,
 })
 const teamcategory=mongoose.model('teamcategory',TeamCategory)
-
-app.get('/category/team',(req,res)=>{
-    teamcategory.find((err,data)=>{
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            res.status(200).send(data)
-        }
-    })
-})
 const AllTeamMembers=mongoose.Schema({
     category: String,
     order: Number,
@@ -64,6 +53,26 @@ const AllTeamMembers=mongoose.Schema({
     Github: String,
 })
 const allteammembers=mongoose.model('allteammembers',AllTeamMembers)
+app.get('/category/team',(req,res)=>{
+    teamcategory.find((err,data)=>{
+        if(err){
+            res.status(500).send(err)
+        }
+        else{
+            res.status(200).send(data)
+        }
+    })
+})
+app.get('/category/team/:id',(req,res)=>{
+    allteammembers.find({category:req.params.id},(err,data)=>{
+        if(err){
+            res.status(500).send(err)
+        }
+        else{
+            res.status(200).send(data)
+        }
+    })
+})
 app.get('/team/TeamMember/:id',(req,res)=>{
     allteammembers.find({_id:req.params.id},(err,data)=>{
         if(err){

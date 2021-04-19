@@ -11,7 +11,7 @@ import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
 import Axios from "axios";
 import { withRouter } from "react-router";
-
+import url from '../../base'
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
 const TabsControl = tw.div`flex flex-wrap bg-gray-200 px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
@@ -65,7 +65,7 @@ function TabGrid({heading = "Checkout the Projects",history}){
   const [project,setProject]=useState([{}])
   //const [tabs,setTab]=useState({})
   useEffect(()=>{
-    Axios.get('https://missionvission.herokuapp.com/category/project').then(res=>{
+    Axios.get(`${url}/category/project`).then(res=>{
       var arr=res.data
       arr.sort((a,b)=>{
         return a.order-b.order
@@ -73,7 +73,7 @@ function TabGrid({heading = "Checkout the Projects",history}){
       setCategory(arr)
       console.log(arr)
     })
-    Axios.get('https://missionvission.herokuapp.com/category/AllProject').then(res=>{
+    Axios.get(`${url}/category/AllProject`).then(res=>{
     var array=res.data
     array.sort((a,b)=>{
       return a.order-b.order
