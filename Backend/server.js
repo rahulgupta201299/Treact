@@ -4,6 +4,8 @@ import nodemailer from 'nodemailer'
 import path from 'path'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import BodyParser from 'body-parser'
+import { stringify } from 'querystring'
 const connection_url= 'mongodb+srv://rahul09091988:Venugopal@1234@cluster0.ron03.mongodb.net/MissionVision?retryWrites=true&w=majority'
 mongoose.connect(connection_url,{
     useNewUrlParser: true,
@@ -23,21 +25,21 @@ var __dirname = path.resolve()
 //app.use(cookieParser());
 app.use(cors())
 app.use((req,res,next)=>{
-    res.setHeader('Access-Control-Allow-Origin','*'),
+    res.setHeader('Access-Control-Allow-Origin','*');
     next()
 })
 //DB config
-app.use(express.json());
+
 //api endpoints
-app.use(express.static(path.join(__dirname,'../build')))
-app.get('/:id',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../build','index.html'))
-})
+
 app.use(express.json());
+app.use(BodyParser.json());
+app.use(BodyParser.urlencoded({ extended: true }));
 
 
 const TeamCategory=mongoose.Schema({
-    heading: String,
+    category: String,
+    image: String,
     order: Number,
 })
 const teamcategory=mongoose.model('teamcategory',TeamCategory)
@@ -45,11 +47,13 @@ const AllTeamMembers=mongoose.Schema({
     category: String,
     order: Number,
     image: String,
-    positon: String,
     name: String,
+    positon: String,
+    GoogleScholar: String,
+    ResearchGate: String,
     LinkedIn: String,
-    ResearchScholar: String,
     Github: String,
+    Youtube: String
 })
 const allteammembers=mongoose.model('allteammembers',AllTeamMembers)
 app.get('/category/team',(req,res)=>{
